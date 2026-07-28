@@ -1,0 +1,26 @@
+name: Update profile summary cards
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: vn7n24fzkq/github-profile-summary-cards@4a9822e91a20eae650b9591769569976f0d578ba # release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROFILE_SUMMARY_CARDS }}
+        with:
+          USERNAME: ${{ github.repository_owner }}
+          BRANCH_NAME: main
+          UTC_OFFSET: -4
+          AUTO_PUSH: true
+          THEME: github_dark
