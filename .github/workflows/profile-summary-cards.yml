@@ -25,6 +25,9 @@ jobs:
           AUTO_PUSH: false
           THEME: github_dark
 
+      - name: Customize generated cards
+        run: node scripts/customize-summary-cards.mjs
+
       - name: Commit generated cards
         run: |
           git config user.name "github-actions[bot]"
