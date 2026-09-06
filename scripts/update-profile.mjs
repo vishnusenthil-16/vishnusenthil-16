@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 
 const login = process.env.PROFILE_USERNAME || 'vishnusenthil-16';
 const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
@@ -94,5 +95,12 @@ ${text(925, 691, 'More', 'muted', 'text-anchor="end"')}
 </svg>\n`;
 await mkdir('assets', { recursive: true });
 // Write only after all requests and rendering succeed: failed refreshes keep the last good card.
+const readme = await readFile('README.md', 'utf8');
+const version = createHash('sha256').update(svg).digest('hex').slice(0, 12);
+const refreshedReadme = readme.replace(/src="\.\/assets\/profile\.svg(?:\?v=[a-f0-9]+)?"/, `src="./assets/profile.svg?v=${version}"`);
+if (refreshedReadme === readme && !readme.includes(`profile.svg?v=${version}`)) {
+  throw new Error('README profile image reference was not found.');
+}
 await writeFile('assets/profile.svg', svg);
+await writeFile('README.md', refreshedReadme);
 console.log(`Updated profile for ${login}: ${calendar.totalContributions} contributions.`);
