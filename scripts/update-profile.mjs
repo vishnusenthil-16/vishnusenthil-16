@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
 const login = process.env.PROFILE_USERNAME || 'vishnusenthil-16';
@@ -97,10 +97,15 @@ await mkdir('assets', { recursive: true });
 // Write only after all requests and rendering succeed: failed refreshes keep the last good card.
 const readme = await readFile('README.md', 'utf8');
 const version = createHash('sha256').update(svg).digest('hex').slice(0, 12);
-const refreshedReadme = readme.replace(/src="\.\/assets\/profile\.svg(?:\?v=[a-f0-9]+)?"/, `src="./assets/profile.svg?v=${version}"`);
-if (refreshedReadme === readme && !readme.includes(`profile.svg?v=${version}`)) {
+const refreshedReadme = readme.replace(/src="\.\/assets\/profile(?:-[a-f0-9]{12})?\.svg(?:\?v=[a-f0-9]+)?"/, `src="./assets/profile-${version}.svg"`);
+if (refreshedReadme === readme && !readme.includes(`profile-${version}.svg`)) {
   throw new Error('README profile image reference was not found.');
 }
-await writeFile('assets/profile.svg', svg);
+await writeFile(`assets/profile-${version}.svg`, svg);
 await writeFile('README.md', refreshedReadme);
+for (const name of await readdir('assets')) {
+  if (/^profile(?:-[a-f0-9]{12})?\.svg$/.test(name) && name !== `profile-${version}.svg`) {
+    await unlink(`assets/${name}`);
+  }
+}
 console.log(`Updated profile for ${login}: ${calendar.totalContributions} contributions.`);
