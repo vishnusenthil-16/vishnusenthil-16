@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/vishnusenthil-16">
-    <img src="./assets/profile-a791bd3b7a26.svg" alt="Vishnu Senthil — ML/AI Platform Engineer. Making production systems behave. GitHub activity and contribution history, refreshed nightly." width="960" />
+    <img src="./assets/profile-0b610a4aff56.svg" alt="Vishnu Senthil — ML/AI Platform Engineer. Making production systems behave. GitHub activity and contribution history, refreshed nightly." width="960" />
   </a>
 </p>
 

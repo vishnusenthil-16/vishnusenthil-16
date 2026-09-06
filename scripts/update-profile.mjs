@@ -46,7 +46,42 @@ const number = value => new Intl.NumberFormat('en-US').format(value);
 const text = (x, y, value, cls = 'body', extra = '') => `<text x="${x}" y="${y}" class="${cls}" ${extra}>${escape(value)}</text>`;
 const colors = { NONE: '#192630', FIRST_QUARTILE: '#164c49', SECOND_QUARTILE: '#247e70', THIRD_QUARTILE: '#38b49a', FOURTH_QUARTILE: '#72e6bc' };
 const updated = new Date().toISOString().slice(0, 10);
-const portrait = (await readFile(new URL('../assets/portrait.txt', import.meta.url), 'utf8')).trimEnd().split('\n');
+const core = `
+<defs>
+  <radialGradient id="halo"><stop stop-color="#36d9c4" stop-opacity=".24"/><stop offset="1" stop-color="#36d9c4" stop-opacity="0"/></radialGradient>
+  <linearGradient id="core-edge" x2="1" y2="1"><stop stop-color="#72e6bc"/><stop offset="1" stop-color="#8a8fff"/></linearGradient>
+</defs>
+<g aria-label="Animated orbital AI core">
+  <circle cx="155" cy="174" r="111" fill="url(#halo)"/>
+  <g fill="#7995ad" opacity=".5">
+    <circle cx="59" cy="106" r="1"/><circle cx="243" cy="104" r="1.5"/>
+    <circle cx="58" cy="233" r="1.5"/><circle cx="252" cy="239" r="1"/>
+    <circle cx="88" cy="81" r="1"/><circle cx="217" cy="265" r="1"/>
+  </g>
+  <circle cx="155" cy="174" r="97" fill="none" stroke="#26424e" stroke-dasharray="2 8"/>
+  <g class="orbit">
+    <circle cx="155" cy="174" r="88" fill="none" stroke="#72e6bc" stroke-width="1" stroke-dasharray="72 480"/>
+    <circle cx="243" cy="174" r="3" fill="#72e6bc"/>
+  </g>
+  <g fill="none" stroke-width="1">
+    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#53cbbb" transform="rotate(-30 155 174)"/>
+    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#8292ed" transform="rotate(30 155 174)"/>
+    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#376273" transform="rotate(90 155 174)"/>
+  </g>
+  <path d="M155 126 197 150V198L155 222 113 198V150Z" fill="#101e2c" stroke="url(#core-edge)" stroke-width="2"/>
+  <path d="M155 137 187 155V193L155 211 123 193V155Z" fill="#102932" stroke="#254d59"/>
+  <g stroke="#6695ac" stroke-width="1.2" fill="none">
+    <path d="M137 159 155 149 173 159 173 186 155 198 137 186Z M137 159 173 186 M173 159 137 186 M155 149V198 M137 159 155 175 173 159 M137 186 155 175 173 186"/>
+  </g>
+  <g fill="#72e6bc">
+    <circle cx="137" cy="159" r="3"/><circle cx="173" cy="159" r="3"/>
+    <circle cx="137" cy="186" r="3"/><circle cx="173" cy="186" r="3"/>
+    <circle cx="155" cy="149" r="3"/><circle cx="155" cy="198" r="3"/>
+  </g>
+  <circle class="pulse" cx="155" cy="175" r="9" fill="#72e6bc" opacity=".18"/>
+  <circle cx="155" cy="175" r="4" fill="#d2fff0"/>
+  <g class="orbit reverse"><circle cx="155" cy="77" r="3.5" fill="#969dff"/><circle cx="155" cy="271" r="2" fill="#53cbbb"/></g>
+</g>`;
 const stats = [
   ['CONTRIBUTIONS', calendar.totalContributions],
   ['COMMITS', activity.totalCommitContributions],
@@ -63,16 +98,21 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .label { fill: #72e6bc; font-size: 14px; }
 .heading { fill: #eff5fa; font-size: 30px; font-weight: 700; }
 .value { fill: #eff5fa; font-size: 32px; font-weight: 700; }
-.ascii { fill: #b9cbd7; font-size: 5.7px; white-space: pre; }
+.orbit { transform-origin: 155px 174px; animation: orbit 24s linear infinite; }
+.reverse { animation-direction: reverse; animation-duration: 36s; }
+.pulse { transform-origin: 155px 175px; animation: pulse 4s ease-in-out infinite; }
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes pulse { 50% { transform: scale(1.65); opacity: .06; } }
+@media (prefers-reduced-motion: reduce) { .orbit, .pulse { animation: none; } }
 </style>
 <rect x="1" y="1" width="958" height="718" rx="18" fill="#0d141c" stroke="#2b3946"/>
 <path d="M1 52H959" stroke="#2b3946"/>
 <circle cx="25" cy="27" r="5" fill="#ff7b72"/><circle cx="44" cy="27" r="5" fill="#e3b341"/><circle cx="63" cy="27" r="5" fill="#72e6bc"/>
 ${text(91, 32, `${login} / README`, 'muted')}
 ${text(925, 32, 'PROFILE.SYS', 'muted', 'text-anchor="end"')}
-${portrait.map((line, i) => text(48, 76 + i * 4.05, line, 'ascii', 'xml:space="preserve"')).join('\n')}
-${text(36, 295, '$ whoami', 'label')}
-${text(36, 321, 'build · measure · refine', 'muted')}
+${core}
+${text(155, 300, 'FROM SIGNAL TO SYSTEM', 'label', 'text-anchor="middle"')}
+${text(155, 322, 'intelligence, engineered.', 'muted', 'text-anchor="middle"')}
 <path d="M298 85V327" stroke="#2b3946"/>
 ${text(330, 110, profile.name || login, 'heading')}
 ${text(330, 142, 'ML/AI Platform Engineer', 'label')}
