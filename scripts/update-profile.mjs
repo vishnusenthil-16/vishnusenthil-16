@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 const login = process.env.PROFILE_USERNAME || 'vishnusenthil-16';
 const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
@@ -35,26 +35,17 @@ const query = `query($login: String!) {
     }
   }
 }`;
-const [profile, result] = await Promise.all([
-  api(`users/${encodeURIComponent(login)}`),
-  api('graphql', { query, variables: { login } }),
-]);
+const result = await api('graphql', { query, variables: { login } });
 if (!result.data?.user) throw new Error(`GitHub user not found: ${login}`);
-const activity = result.data.user.contributionsCollection;
+const profile = result.data.user;
+const activity = profile.contributionsCollection;
 const calendar = activity.contributionCalendar;
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[char]);
 const number = value => new Intl.NumberFormat('en-US').format(value);
 const text = (x, y, value, cls = 'body', extra = '') => `<text x="${x}" y="${y}" class="${cls}" ${extra}>${escape(value)}</text>`;
 const colors = { NONE: '#192630', FIRST_QUARTILE: '#164c49', SECOND_QUARTILE: '#247e70', THIRD_QUARTILE: '#38b49a', FOURTH_QUARTILE: '#72e6bc' };
 const updated = new Date().toISOString().slice(0, 10);
-const monogram = [
-  '██╗   ██╗███████╗',
-  '██║   ██║██╔════╝',
-  '██║   ██║███████╗',
-  '╚██╗ ██╔╝╚════██║',
-  ' ╚████╔╝ ███████║',
-  '  ╚═══╝  ╚══════╝',
-];
+const portrait = (await readFile(new URL('../assets/portrait.txt', import.meta.url), 'utf8')).trimEnd().split('\n');
 const stats = [
   ['CONTRIBUTIONS', calendar.totalContributions],
   ['COMMITS', activity.totalCommitContributions],
@@ -64,7 +55,6 @@ const stats = [
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
 <title id="title">${escape(profile.name || login)} — GitHub profile</title>
 <desc id="desc">ML/AI Platform Engineer. ${number(calendar.totalContributions)} contributions over the past 12 months. Updated ${updated}.</desc>
-<defs><linearGradient id="accent" x2="1" y2="1"><stop stop-color="#72e6bc"/><stop offset="1" stop-color="#7aa2f7"/></linearGradient></defs>
 <style>
 text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .body { fill: #d2dce6; font-size: 16px; }
@@ -72,14 +62,14 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .label { fill: #72e6bc; font-size: 14px; }
 .heading { fill: #eff5fa; font-size: 30px; font-weight: 700; }
 .value { fill: #eff5fa; font-size: 32px; font-weight: 700; }
-.ascii { fill: url(#accent); font-size: 21px; white-space: pre; }
+.ascii { fill: #b9cbd7; font-size: 6.4px; white-space: pre; }
 </style>
 <rect x="1" y="1" width="958" height="718" rx="18" fill="#0d141c" stroke="#2b3946"/>
 <path d="M1 52H959" stroke="#2b3946"/>
 <circle cx="25" cy="27" r="5" fill="#ff7b72"/><circle cx="44" cy="27" r="5" fill="#e3b341"/><circle cx="63" cy="27" r="5" fill="#72e6bc"/>
 ${text(91, 32, `${login} / README`, 'muted')}
 ${text(925, 32, 'PROFILE.SYS', 'muted', 'text-anchor="end"')}
-${monogram.map((line, i) => text(36, 115 + i * 25, line, 'ascii', 'xml:space="preserve"')).join('\n')}
+${portrait.map((line, i) => text(48, 76 + i * 4.65, line, 'ascii', 'xml:space="preserve"')).join('\n')}
 ${text(36, 295, '$ whoami', 'label')}
 ${text(36, 321, 'build · measure · refine', 'muted')}
 <path d="M298 85V327" stroke="#2b3946"/>
@@ -87,9 +77,8 @@ ${text(330, 110, profile.name || login, 'heading')}
 ${text(330, 142, 'ML/AI Platform Engineer', 'label')}
 ${text(330, 185, 'Making production systems behave.')}
 ${text(330, 212, 'Clean abstractions. Fast feedback loops.', 'muted')}
-${text(330, 260, 'focus', 'label')}${text(435, 260, 'ML infrastructure / AI platforms')}
+${text(330, 260, 'focus', 'label')}${text(435, 260, 'ML/AI Ops, AI platform')}
 ${text(330, 288, 'github', 'label')}${text(435, 288, `@${login}`)}
-${text(330, 316, 'public', 'label')}${text(435, 316, `${number(profile.public_repos)} repos  /  ${number(profile.followers)} followers`)}
 <path d="M35 351H925" stroke="#2b3946"/>
 ${text(36, 382, '$ activity --last-12-months', 'label')}
 ${stats.map(([label, count], index) => {

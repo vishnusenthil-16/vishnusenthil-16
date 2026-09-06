@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - scripts/update-profile.mjs
+      - assets/portrait.txt
       - .github/workflows/profile-summary-cards.yml
 
 permissions:

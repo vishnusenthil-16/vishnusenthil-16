@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
 <title id="title">Vishnu Senthil — GitHub profile</title>
 <desc id="desc">ML/AI Platform Engineer. 1,579 contributions over the past 12 months. Updated 2026-09-06.</desc>
-<defs><linearGradient id="accent" x2="1" y2="1"><stop stop-color="#72e6bc"/><stop offset="1" stop-color="#7aa2f7"/></linearGradient></defs>
 <style>
 text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .body { fill: #d2dce6; font-size: 16px; }
@@ -9,19 +8,57 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .label { fill: #72e6bc; font-size: 14px; }
 .heading { fill: #eff5fa; font-size: 30px; font-weight: 700; }
 .value { fill: #eff5fa; font-size: 32px; font-weight: 700; }
-.ascii { fill: url(#accent); font-size: 21px; white-space: pre; }
+.ascii { fill: #b9cbd7; font-size: 6.4px; white-space: pre; }
 </style>
 <rect x="1" y="1" width="958" height="718" rx="18" fill="#0d141c" stroke="#2b3946"/>
 <path d="M1 52H959" stroke="#2b3946"/>
 <circle cx="25" cy="27" r="5" fill="#ff7b72"/><circle cx="44" cy="27" r="5" fill="#e3b341"/><circle cx="63" cy="27" r="5" fill="#72e6bc"/>
 <text x="91" y="32" class="muted" >vishnusenthil-16 / README</text>
 <text x="925" y="32" class="muted" text-anchor="end">PROFILE.SYS</text>
-<text x="36" y="115" class="ascii" xml:space="preserve">██╗   ██╗███████╗</text>
-<text x="36" y="140" class="ascii" xml:space="preserve">██║   ██║██╔════╝</text>
-<text x="36" y="165" class="ascii" xml:space="preserve">██║   ██║███████╗</text>
-<text x="36" y="190" class="ascii" xml:space="preserve">╚██╗ ██╔╝╚════██║</text>
-<text x="36" y="215" class="ascii" xml:space="preserve"> ╚████╔╝ ███████║</text>
-<text x="36" y="240" class="ascii" xml:space="preserve">  ╚═══╝  ╚══════╝</text>
+<text x="48" y="76" class="ascii" xml:space="preserve"></text>
+<text x="48" y="80.65" class="ascii" xml:space="preserve"></text>
+<text x="48" y="85.3" class="ascii" xml:space="preserve">                          2X</text>
+<text x="48" y="89.95" class="ascii" xml:space="preserve">                       MGGGSGGGh2</text>
+<text x="48" y="94.6" class="ascii" xml:space="preserve">                    s2MMGGSSSGGHM3A</text>
+<text x="48" y="99.25" class="ascii" xml:space="preserve">                 iis3MHGGSS##SSGGHM3</text>
+<text x="48" y="103.9" class="ascii" xml:space="preserve">                rrs2MHG########SSGHH2i</text>
+<text x="48" y="108.55000000000001" class="ascii" xml:space="preserve">               rrsX3#9###999999999SG3ri</text>
+<text x="48" y="113.2" class="ascii" xml:space="preserve">              :sss2#Mr:;sAMS#SGHhHS#Msri</text>
+<text x="48" y="117.85" class="ascii" xml:space="preserve">             G;As2G2.:,...i3MX:...,sS5Xr</text>
+<text x="48" y="122.5" class="ascii" xml:space="preserve">             G;AAAr.,ii;:,:22:..,,,.XS5Xs</text>
+<text x="48" y="127.15" class="ascii" xml:space="preserve">             G:32;........;ri;,,,,:;,X2rsi</text>
+<text x="48" y="131.8" class="ascii" xml:space="preserve">             H;M#X,.......,2X,........;AA;</text>
+<text x="48" y="136.45" class="ascii" xml:space="preserve">             Gih92........r@H........,XH2,@</text>
+<text x="48" y="141.10000000000002" class="ascii" xml:space="preserve">             Gi2#A.,......M&amp;S,........M#3,</text>
+<text x="48" y="145.75" class="ascii" xml:space="preserve">             &amp;.2BH;,.....X9@&amp;2......:,MhA;</text>
+<text x="48" y="150.4" class="ascii" xml:space="preserve">              .h9SGhArr;A9&amp;9&amp;Ss....,,293,i</text>
+<text x="48" y="155.05" class="ascii" xml:space="preserve">            #32h9##SGG32Gh3HMHSXXAA3G#9M.H</text>
+<text x="48" y="159.7" class="ascii" xml:space="preserve">            ;253SGGGGH2A;,rAs:rAAMHG9993X9</text>
+<text x="48" y="164.35000000000002" class="ascii" xml:space="preserve">            XSA2SHMh3XX5Xsi;;sXAX5MHHGS52s</text>
+<text x="48" y="169" class="ascii" xml:space="preserve">            5MrX3352srsAr,....rAsr233hHs23</text>
+<text x="48" y="173.65" class="ascii" xml:space="preserve">            H3Xis2A2i::::::ri:;;:,s353hi5</text>
+<text x="48" y="178.3" class="ascii" xml:space="preserve">             3M;sAA2,..:X3Mh32i:..;553X;5s</text>
+<text x="48" y="182.95" class="ascii" xml:space="preserve">             GS;iXiA,,;rH3GG9Bh...:35s:X3#</text>
+<text x="48" y="187.60000000000002" class="ascii" xml:space="preserve">              3.;X:X;;3hHGMMHGM3A.i5i;;5H</text>
+<text x="48" y="192.25" class="ascii" xml:space="preserve">               3.r:X;;A3522255hMA.rX:;,A@@@Mr:iH</text>
+<text x="48" y="196.9" class="ascii" xml:space="preserve">                .::r;;;ir,...;AX:.rr:.r@S:.......iS</text>
+<text x="48" y="201.55" class="ascii" xml:space="preserve">                ;.,;:,,:::,:,;i:..;;..:.............h</text>
+<text x="48" y="206.20000000000002" class="ascii" xml:space="preserve">                M...,..:,,rs;::,..:,..................#</text>
+<text x="48" y="210.85000000000002" class="ascii" xml:space="preserve">                #:........i;,.....,..,.................S</text>
+<text x="48" y="215.5" class="ascii" xml:space="preserve">                #s..................:i..................</text>
+<text x="48" y="220.15" class="ascii" xml:space="preserve">                G3;.................Xi..................</text>
+<text x="48" y="224.8" class="ascii" xml:space="preserve">              #AGh2:...............;3r..................</text>
+<text x="48" y="229.45000000000002" class="ascii" xml:space="preserve">             r.;S33X..............;A3s..................</text>
+<text x="48" y="234.10000000000002" class="ascii" xml:space="preserve">            i..rG352X............iA5hr..:AXs,...........</text>
+<text x="48" y="238.75" class="ascii" xml:space="preserve">           s,..:hh355s.........:r2253s..,s;.............</text>
+<text x="48" y="243.4" class="ascii" xml:space="preserve">          #,....Ah3535Xsr,,:;isXA2532X...i;,............</text>
+<text x="48" y="248.05" class="ascii" xml:space="preserve">          X.....s535332AXiirXXA25255Ai..::.::;;.........</text>
+<text x="48" y="252.70000000000002" class="ascii" xml:space="preserve">      9Mr:i...,.;A22335XirXXA222555Ai,......::rs;.......</text>
+<text x="48" y="257.35" class="ascii" xml:space="preserve"> @G2r;;...,,,...:XA2555AXAAA2225552r,...,;;;irssXr......</text>
+<text x="48" y="262" class="ascii" xml:space="preserve">i;;;;ri;:...,...:sX222255522522555s,..,:;irrrr;.,is;....</text>
+<text x="48" y="266.65" class="ascii" xml:space="preserve">irriii;.,...,...,ssA52A2332225225s....:;;,::,..55.:i:...</text>
+<text x="48" y="271.3" class="ascii" xml:space="preserve">ii;;i;:..,.......rAX52XXXA222222s....;i;;;,...,r;..,;:..</text>
+<text x="48" y="275.95000000000005" class="ascii" xml:space="preserve">:::::,............sA352AA222222r...,:i;ir:..,,...::;:,.,</text>
 <text x="36" y="295" class="label" >$ whoami</text>
 <text x="36" y="321" class="muted" >build · measure · refine</text>
 <path d="M298 85V327" stroke="#2b3946"/>
@@ -29,9 +66,8 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 <text x="330" y="142" class="label" >ML/AI Platform Engineer</text>
 <text x="330" y="185" class="body" >Making production systems behave.</text>
 <text x="330" y="212" class="muted" >Clean abstractions. Fast feedback loops.</text>
-<text x="330" y="260" class="label" >focus</text><text x="435" y="260" class="body" >ML infrastructure / AI platforms</text>
+<text x="330" y="260" class="label" >focus</text><text x="435" y="260" class="body" >ML/AI Ops, AI platform</text>
 <text x="330" y="288" class="label" >github</text><text x="435" y="288" class="body" >@vishnusenthil-16</text>
-<text x="330" y="316" class="label" >public</text><text x="435" y="316" class="body" >2 repos  /  2 followers</text>
 <path d="M35 351H925" stroke="#2b3946"/>
 <text x="36" y="382" class="label" >$ activity --last-12-months</text>
 <rect x="36" y="400" width="210" height="87" rx="8" fill="#121e28"/><text x="52" y="425" class="muted" >CONTRIBUTIONS</text><text x="52" y="465" class="value" >1,579</text>
