@@ -1,13 +1,13 @@
 <p align="center">
   <a href="https://github.com/vishnusenthil-16">
-    <img src="./assets/profile-cf38a55c69fc.svg" alt="Vishnu Senthil — ML/AI Platform Engineer. Making production systems behave. GitHub activity and contribution history, refreshed nightly." width="960" />
+    <img src="./assets/profile-049ba930e98f.svg" alt="Vishnu Senthil — ML/AI Platform Engineer. Focus: ML/AI Ops and AI platform. GitHub metrics and weekly contributions, refreshed nightly." width="960" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/vishnusenthil-16?tab=repositories">Explore my repositories</a>
+  <a href="https://github.com/vishnusenthil-16?tab=repositories">Repositories</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/vishnusenthil-16/vishnusenthil-16/actions/workflows/profile-summary-cards.yml">Nightly refresh</a>
+  <a href="https://github.com/vishnusenthil-16/vishnusenthil-16/actions/workflows/profile-summary-cards.yml">Metrics workflow</a>
 </p>
 
 <details>

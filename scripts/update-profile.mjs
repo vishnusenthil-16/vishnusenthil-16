@@ -44,92 +44,68 @@ const calendar = activity.contributionCalendar;
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[char]);
 const number = value => new Intl.NumberFormat('en-US').format(value);
 const text = (x, y, value, cls = 'body', extra = '') => `<text x="${x}" y="${y}" class="${cls}" ${extra}>${escape(value)}</text>`;
-const colors = { NONE: '#192630', FIRST_QUARTILE: '#164c49', SECOND_QUARTILE: '#247e70', THIRD_QUARTILE: '#38b49a', FOURTH_QUARTILE: '#72e6bc' };
 const updated = new Date().toISOString().slice(0, 10);
-const core = `
-<defs>
-  <radialGradient id="halo"><stop stop-color="#36d9c4" stop-opacity=".24"/><stop offset="1" stop-color="#36d9c4" stop-opacity="0"/></radialGradient>
-  <linearGradient id="core-edge" x2="1" y2="1"><stop stop-color="#72e6bc"/><stop offset="1" stop-color="#8a8fff"/></linearGradient>
-</defs>
-<g aria-label="Animated orbital AI core">
-  <circle cx="155" cy="174" r="111" fill="url(#halo)"/>
-  <g fill="#7995ad" opacity=".5">
-    <circle cx="59" cy="106" r="1"/><circle cx="243" cy="104" r="1.5"/>
-    <circle cx="58" cy="233" r="1.5"/><circle cx="252" cy="239" r="1"/>
-    <circle cx="88" cy="81" r="1"/><circle cx="217" cy="265" r="1"/>
-  </g>
-  <circle cx="155" cy="174" r="97" fill="none" stroke="#26424e" stroke-dasharray="2 8"/>
-  <g class="orbit">
-    <circle cx="155" cy="174" r="88" fill="none" stroke="#72e6bc" stroke-width="1" stroke-dasharray="72 480"/>
-    <circle cx="243" cy="174" r="3" fill="#72e6bc"/>
-  </g>
-  <g fill="none" stroke-width="1">
-    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#53cbbb" transform="rotate(-30 155 174)"/>
-    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#8292ed" transform="rotate(30 155 174)"/>
-    <ellipse cx="155" cy="174" rx="91" ry="33" stroke="#376273" transform="rotate(90 155 174)"/>
-  </g>
-  <path d="M155 126 197 150V198L155 222 113 198V150Z" fill="#101e2c" stroke="url(#core-edge)" stroke-width="2"/>
-  <path d="M155 137 187 155V193L155 211 123 193V155Z" fill="#102932" stroke="#254d59"/>
-  <g stroke="#6695ac" stroke-width="1.2" fill="none">
-    <path d="M137 159 155 149 173 159 173 186 155 198 137 186Z M137 159 173 186 M173 159 137 186 M155 149V198 M137 159 155 175 173 159 M137 186 155 175 173 186"/>
-  </g>
-  <g fill="#72e6bc">
-    <circle cx="137" cy="159" r="3"/><circle cx="173" cy="159" r="3"/>
-    <circle cx="137" cy="186" r="3"/><circle cx="173" cy="186" r="3"/>
-    <circle cx="155" cy="149" r="3"/><circle cx="155" cy="198" r="3"/>
-  </g>
-  <circle class="pulse" cx="155" cy="175" r="9" fill="#72e6bc" opacity=".18"/>
-  <circle cx="155" cy="175" r="4" fill="#d2fff0"/>
-  <g class="orbit reverse"><circle cx="155" cy="77" r="3.5" fill="#969dff"/><circle cx="155" cy="271" r="2" fill="#53cbbb"/></g>
-</g>`;
+const weeks = calendar.weeks.map(week => ({
+  date: week.contributionDays[0].date,
+  count: week.contributionDays.reduce((sum, day) => sum + day.contributionCount, 0),
+}));
+const maximum = Math.max(1, ...weeks.map(week => week.count));
+const chartWidth = 850;
+const step = chartWidth / weeks.length;
 const stats = [
   ['CONTRIBUTIONS', calendar.totalContributions],
   ['COMMITS', activity.totalCommitContributions],
   ['PULL REQUESTS', activity.totalPullRequestContributions],
   ['REVIEWS', activity.totalPullRequestReviewContributions],
 ];
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
-<title id="title">${escape(profile.name || login)} — GitHub profile</title>
-<desc id="desc">ML/AI Platform Engineer. ${number(calendar.totalContributions)} contributions over the past 12 months. Updated ${updated}.</desc>
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="690" viewBox="0 0 960 690" role="img" aria-labelledby="title desc">
+<title id="title">${escape(profile.name || login)} — ML/AI Platform Engineer</title>
+<desc id="desc">Focus: ML/AI Ops and AI platform. ${number(calendar.totalContributions)} GitHub contributions in the last 12 months. A weekly contribution bar chart. Updated ${updated}.</desc>
 <style>
-text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
-.body { fill: #d2dce6; font-size: 16px; }
-.muted { fill: #93a6b7; font-size: 13px; }
-.label { fill: #72e6bc; font-size: 14px; }
-.heading { fill: #eff5fa; font-size: 30px; font-weight: 700; }
-.value { fill: #eff5fa; font-size: 32px; font-weight: 700; }
-.orbit { transform-origin: 155px 174px; animation: orbit 24s linear infinite; }
-.reverse { animation-direction: reverse; animation-duration: 36s; }
-.pulse { transform-origin: 155px 175px; animation: pulse 4s ease-in-out infinite; }
-@keyframes orbit { to { transform: rotate(360deg); } }
-@keyframes pulse { 50% { transform: scale(1.65); opacity: .06; } }
-@media (prefers-reduced-motion: reduce) { .orbit, .pulse { animation: none; } }
+text { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.name { fill: #202823; font-size: 102px; font-weight: 800; letter-spacing: -6px; }
+.body { fill: #202823; font-size: 25px; letter-spacing: -.5px; }
+.micro { fill: #596159; font-family: 'DejaVu Sans Mono', monospace; font-size: 12px; letter-spacing: .5px; }
+.value { fill: #202823; font-size: 43px; font-weight: 500; letter-spacing: -2px; }
+.dark-label { fill: #bec6ba; font-family: 'DejaVu Sans Mono', monospace; font-size: 12px; }
+.axis { fill: #a0ac9e; font-family: 'DejaVu Sans Mono', monospace; font-size: 11px; }
 </style>
-<rect x="1" y="1" width="958" height="718" rx="18" fill="#0d141c" stroke="#2b3946"/>
-<path d="M1 52H959" stroke="#2b3946"/>
-<circle cx="25" cy="27" r="5" fill="#ff7b72"/><circle cx="44" cy="27" r="5" fill="#e3b341"/><circle cx="63" cy="27" r="5" fill="#72e6bc"/>
-${text(91, 32, `${login} / README`, 'muted')}
-${text(925, 32, 'PROFILE.SYS', 'muted', 'text-anchor="end"')}
-${core}
-<path d="M298 85V327" stroke="#2b3946"/>
-${text(330, 110, profile.name || login, 'heading')}
-${text(330, 142, 'ML/AI Platform Engineer', 'label')}
-${text(330, 185, 'Making production systems behave.')}
-${text(330, 212, 'Clean abstractions. Fast feedback loops.', 'muted')}
-${text(330, 260, 'focus', 'label')}${text(435, 260, 'ML/AI Ops, AI platform')}
-${text(330, 288, 'github', 'label')}${text(435, 288, `@${login}`)}
-<path d="M35 351H925" stroke="#2b3946"/>
-${text(36, 382, '$ activity --last-12-months', 'label')}
+<rect width="960" height="690" fill="#f0efe6"/>
+<rect x="40" y="35" width="10" height="10" fill="#dc5b36"/>
+${text(62, 45, `@${login}`, 'micro')}
+${text(918, 45, 'ML/AI PLATFORM ENGINEER', 'micro', 'text-anchor="end"')}
+<path d="M40 65H920" stroke="#c8cbbf"/>
+${text(36, 162, 'VISHNU', 'name')}
+${text(36, 253, 'SENTHIL', 'name')}
+<path d="M625 102V249" stroke="#dc5b36" stroke-width="2"/>
+${text(654, 123, 'FOCUS', 'micro')}
+${text(654, 167, 'ML/AI Ops', 'body')}
+${text(654, 204, 'AI platform', 'body')}
+<path d="M40 288H920" stroke="#c8cbbf"/>
 ${stats.map(([label, count], index) => {
-  const x = 36 + index * 226;
-  return `<rect x="${x}" y="400" width="210" height="87" rx="8" fill="#121e28"/>${text(x + 16, 425, label, 'muted')}${text(x + 16, 465, number(count), 'value')}`;
-}).join('\n')}
-${text(36, 526, 'CONTRIBUTION HISTORY', 'muted')}
-${calendar.weeks.map((week, index) => week.contributionDays.map(day => `<rect x="${36 + index * 16.7}" y="${545 + day.weekday * 16}" width="13" height="13" rx="3" fill="${colors[day.contributionLevel]}"><title>${escape(day.date)}: ${day.contributionCount} contributions</title></rect>`).join('')).join('\n')}
-${text(36, 691, `Updated ${updated} UTC · refreshes nightly`, 'muted')}
-${text(925, 691, 'Less', 'muted', 'text-anchor="end" transform="translate(-161 0)"')}
-${Object.values(colors).map((color, index) => `<rect x="${780 + index * 17}" y="680" width="12" height="12" rx="2" fill="${color}"/>`).join('')}
-${text(925, 691, 'More', 'muted', 'text-anchor="end"')}
+  const x = 40 + index * 225;
+  return `${index ? `<path d="M${x - 20} 315V374" stroke="#c8cbbf"/>` : ''}${text(x, 345, number(count), 'value')}${text(x, 373, label, 'micro')}`;
+}).join('')}
+<rect y="410" width="960" height="280" fill="#202823"/>
+${text(40, 446, 'WEEKLY CONTRIBUTIONS', 'dark-label')}
+${text(920, 446, 'LAST 12 MONTHS', 'dark-label', 'text-anchor="end"')}
+<path d="M65 483H920 M65 533H920 M65 583H920" stroke="#3a453b" stroke-width=".6"/>
+${text(49, 487, number(maximum), 'axis', 'text-anchor="end"')}
+${text(49, 587, '0', 'axis', 'text-anchor="end"')}
+${weeks.map((week, i) => {
+  const height = week.count / maximum * 100;
+  return `<rect x="${65 + i * step}" y="${583 - height}" width="${step - 4}" height="${height}" fill="${week.count === maximum ? '#f2bd83' : '#de7653'}"><title>Week of ${week.date}: ${week.count} contributions</title></rect>`;
+}).join('')}
+${weeks.map((week, i) => {
+  const month = week.date.slice(0, 7);
+  if (i === 0 || weeks[i - 1].date.slice(0, 7) === month) return '';
+  if (i > weeks.length - 3) return '';
+  const label = new Date(`${week.date}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase();
+  return text(65 + i * step, 607, label, 'axis');
+}).join('')}
+<path d="M40 635H920" stroke="#445044"/>
+${text(40, 663, `UPDATED ${updated} UTC`, 'dark-label')}
+${text(920, 663, 'REFRESHED NIGHTLY', 'dark-label', 'text-anchor="end"')}
 </svg>\n`;
 await mkdir('assets', { recursive: true });
 // Write only after all requests and rendering succeed: failed refreshes keep the last good card.
