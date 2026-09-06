@@ -111,8 +111,6 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 ${text(91, 32, `${login} / README`, 'muted')}
 ${text(925, 32, 'PROFILE.SYS', 'muted', 'text-anchor="end"')}
 ${core}
-${text(155, 300, 'FROM SIGNAL TO SYSTEM', 'label', 'text-anchor="middle"')}
-${text(155, 322, 'intelligence, engineered.', 'muted', 'text-anchor="middle"')}
 <path d="M298 85V327" stroke="#2b3946"/>
 ${text(330, 110, profile.name || login, 'heading')}
 ${text(330, 142, 'ML/AI Platform Engineer', 'label')}
