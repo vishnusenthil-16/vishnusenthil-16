@@ -1,43 +1,46 @@
-name: Update profile summary cards
+name: Update profile metrics
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # 01:23 EST / 02:23 EDT, away from the busy top of the hour.
+    - cron: "23 6 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/update-profile.mjs
+      - .github/workflows/profile-summary-cards.yml
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-metrics
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
-      - uses: vn7n24fzkq/github-profile-summary-cards@4a9822e91a20eae650b9591769569976f0d578ba # release
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROFILE_SUMMARY_CARDS }}
         with:
-          USERNAME: ${{ github.repository_owner }}
-          BRANCH_NAME: main
-          UTC_OFFSET: -4
-          AUTO_PUSH: false
-          THEME: github_dark
+          ref: main
 
-      - name: Customize generated cards
-        run: node scripts/customize-summary-cards.mjs
+      - name: Generate profile panel
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SUMMARY_CARDS || github.token }}
+          PROFILE_USERNAME: ${{ github.repository_owner }}
+        run: node scripts/update-profile.mjs
 
-      - name: Commit generated cards
+      - name: Commit refreshed metrics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile-summary-card-output
-
+          git add assets/profile.svg
           if git diff --cached --quiet; then
-            echo "No card changes to commit"
+            echo "Profile is already current"
             exit 0
           fi
-
-          git commit -m "Generate profile summary cards"
-          git push
+          git commit -m "Update profile metrics"
+          git push origin HEAD:main
