@@ -62,14 +62,14 @@ text { font-family: 'DejaVu Sans Mono', 'SFMono-Regular', Consolas, monospace; }
 .label { fill: #72e6bc; font-size: 14px; }
 .heading { fill: #eff5fa; font-size: 30px; font-weight: 700; }
 .value { fill: #eff5fa; font-size: 32px; font-weight: 700; }
-.ascii { fill: #b9cbd7; font-size: 6.4px; white-space: pre; }
+.ascii { fill: #b9cbd7; font-size: 5.7px; white-space: pre; }
 </style>
 <rect x="1" y="1" width="958" height="718" rx="18" fill="#0d141c" stroke="#2b3946"/>
 <path d="M1 52H959" stroke="#2b3946"/>
 <circle cx="25" cy="27" r="5" fill="#ff7b72"/><circle cx="44" cy="27" r="5" fill="#e3b341"/><circle cx="63" cy="27" r="5" fill="#72e6bc"/>
 ${text(91, 32, `${login} / README`, 'muted')}
 ${text(925, 32, 'PROFILE.SYS', 'muted', 'text-anchor="end"')}
-${portrait.map((line, i) => text(48, 76 + i * 4.65, line, 'ascii', 'xml:space="preserve"')).join('\n')}
+${portrait.map((line, i) => text(48, 76 + i * 4.05, line, 'ascii', 'xml:space="preserve"')).join('\n')}
 ${text(36, 295, '$ whoami', 'label')}
 ${text(36, 321, 'build · measure · refine', 'muted')}
 <path d="M298 85V327" stroke="#2b3946"/>
