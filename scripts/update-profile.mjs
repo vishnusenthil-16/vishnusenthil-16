@@ -110,6 +110,7 @@ ${text(920, 663, 'REFRESHED NIGHTLY', 'dark-label', 'text-anchor="end"')}
 await mkdir('assets', { recursive: true });
 // Write only after all requests and rendering succeed: failed refreshes keep the last good card.
 const readme = await readFile('README.md', 'utf8');
+const previousImage = readme.match(/src="\.\/assets\/(profile-[a-f0-9]{12}\.svg)"/)?.[1];
 const version = createHash('sha256').update(svg).digest('hex').slice(0, 12);
 const refreshedReadme = readme.replace(/src="\.\/assets\/profile(?:-[a-f0-9]{12})?\.svg(?:\?v=[a-f0-9]+)?"/, `src="./assets/profile-${version}.svg"`);
 if (refreshedReadme === readme && !readme.includes(`profile-${version}.svg`)) {
@@ -118,7 +119,7 @@ if (refreshedReadme === readme && !readme.includes(`profile-${version}.svg`)) {
 await writeFile(`assets/profile-${version}.svg`, svg);
 await writeFile('README.md', refreshedReadme);
 for (const name of await readdir('assets')) {
-  if (/^profile(?:-[a-f0-9]{12})?\.svg$/.test(name) && name !== `profile-${version}.svg`) {
+  if (/^profile(?:-[a-f0-9]{12})?\.svg$/.test(name) && name !== `profile-${version}.svg` && name !== previousImage) {
     await unlink(`assets/${name}`);
   }
 }
